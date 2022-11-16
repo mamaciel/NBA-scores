@@ -1,0 +1,55 @@
+@font-face {
+    font-family: 'NBA-font';
+    src: url('nba-lakers.ttf');
+}
+
+body{
+    background-color: #161616;
+}
+
+.main-body{
+    margin-top: 6%;
+}
+
+.scores-screen{
+    width:500px;
+    background: rgba(255, 255, 255, 0.11);
+    backdrop-filter: saturate(300%) blur(100px);
+    position: relative;
+    width: 50%;
+    height: 1000px;
+    margin: auto;
+    border-radius: 30px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+}
+
+.titleH1{
+    font-size:30px;
+    padding-top: 40px;
+    color: white;
+    text-align: center;
+    font-family: Helvetica;
+}
+
+table{
+    font-family: Helvetica;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th{
+    padding: 8px;
+
+}
+
+td{
+    color: white;
+    text-align: center;
+}
+
+
+th{
+    font-weight: bold;
+    text-transform: uppercase;
+}
