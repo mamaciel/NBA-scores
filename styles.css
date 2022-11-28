@@ -50,15 +50,11 @@ td{
     text-align: center;
 }
 
-tr:nth-child(3n+0){
+tr:nth-child(4n+1), tr:nth-child(4n+2){
     background-color: #1b1b1b;
     color: #fff;
 }
 
-/*tr:nth-child(even) td{
-    background-color: rgba(255, 255, 255, 0.10);
-    color: #fff;
-}*/
 
 
 th{

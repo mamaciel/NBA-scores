@@ -20,7 +20,7 @@ async function getAPI() {
             'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
         }
     };
-    var res = await fetch(`https://api-nba-v1.p.rapidapi.com/games?date=${year}-${month}-29`, options)
+    var res = await fetch(`https://api-nba-v1.p.rapidapi.com/games?date=${year}-${month}-26`, options)
         .catch(err => console.error(err));
 
     var data = await res.json();
