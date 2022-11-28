@@ -1,3 +1,6 @@
+// ADD FUNCTION RECURRING API UPDATE EVERY 1MIN OR SO
+
+
 getAPI();
 //window.onload = () => {
     //loadTableData();
@@ -17,7 +20,7 @@ async function getAPI() {
             'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
         }
     };
-    var res = await fetch(`https://api-nba-v1.p.rapidapi.com/games?date=${year}-${month}-${day}`, options)
+    var res = await fetch(`https://api-nba-v1.p.rapidapi.com/games?date=${year}-${month}-29`, options)
         .catch(err => console.error(err));
 
     var data = await res.json();
@@ -26,7 +29,7 @@ async function getAPI() {
 
 function loadTableData(response){
     tableData = []
-
+    console.log(response)
     for(item of response){
 
         var homeTeam = item.teams.home.name;
@@ -35,31 +38,62 @@ function loadTableData(response){
         homeTeam = homeTeam.replace(/\s+/g, '-').toLowerCase();
         awayTeam = awayTeam.replace(/\s+/g, '-').toLowerCase();
 
-        tableData.push({team1: `${item.teams.home.name}`, score1: `${item.scores.home.points}`, team1Img: `team-logos/${homeTeam}.png`, team2: `${item.teams.visitors.name}`, score2: `${item.scores.visitors.points}`, team2Img: `team-logos/${awayTeam}.png`})
+
+        tableData.push({gameTime: `${item.date.start}`, status: `${item.status.long}`, quarter: `${item.periods.current}`, team1: `${item.teams.home.name}`, score1: `${item.scores.home.points}`, team1Img: `team-logos/${homeTeam}.png`, team2: `${item.teams.visitors.name}`, score2: `${item.scores.visitors.points}`, team2Img: `team-logos/${awayTeam}.png`})
     }
 
+    const tableBody = document.getElementById('tableData');
+    let data = '';
+
      for (item of tableData){
-        console.log(item)
-        console.log(item.score1)
+        var period = item.quarter
+        var status = item.status
+        var time = item.gameTime;
+        time = new Date(time).toLocaleTimeString('en', { timeStyle: 'short', hour12: true, timeZone: 'EST' });
+
         if(item.score1 == 'null' || item.score2 == 'null'){
             console.log("worked")
             item.score1 = '-'
             console.log(item.score1)
             item.score2 = '-'
+            data += `<tr>
+            <td class = "left" rowspan="2">${item.team1} <img src=${item.team1Img}></td>
+            <td>${time}</td>
+            <td>EST</td>
+            <td class="right" rowspan="2"><img src=${item.team2Img}> ${item.team2}</td>
+            </tr>
+            
+            <tr>
+            <td class="period" colspan="2"><img src = images/clock.png></td>
+            </tr>`;
+        }
+
+        else if (status == 'Finished'){
+            data += `<tr>
+            <td class="left" rowspan="2"> ${item.team1} <img src=${item.team1Img}></td>
+            <td> ${item.score1} </td>
+            <td> ${item.score2} </td>
+            <td class="right" rowspan="2"> <img src=${item.team2Img}>  ${item.team2}</td>
+            </tr>
+
+            <tr>
+            <td class="period" colspan="2">Final</td>
+            </tr>`;
+        }
+
+        else{
+            data += `<tr>
+            <td class="left" rowspan="2"> ${item.team1} <img src=${item.team1Img}></td>
+            <td> ${item.score1} </td>
+            <td> ${item.score2} </td>
+            <td class="right" rowspan="2"> <img src=${item.team2Img}>  ${item.team2}</td>
+            </tr>
+
+            <tr>
+            <td class="period" colspan="2">${period}TH QR</td>
+            </tr>`;
         }
     }
-    
-
-    console.log(tableData)
-
-    const tableBody = document.getElementById('tableData');
-    let data = '';
-
-    for (item of tableData) {
-        data += `<tr><td class = "left">${item.team1} <img src=${item.team1Img}></td><td> ${item.score1} </td><td> ${item.score2} </td><td class="right"><img src=${item.team2Img}>  ${item.team2}</td></tr>`;
-    }
-
-    console.log(data)
 
     tableBody.innerHTML = data;
 }
