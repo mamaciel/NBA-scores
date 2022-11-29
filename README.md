@@ -1,3 +1,3 @@
 # NBA-scores
-Website for viewing current NBA game scores live using an API for data. 
-![image](https://user-images.githubusercontent.com/47039827/204121195-c5cd26f4-b30d-4d64-a0e0-56585990b9de.png)
+Website for viewing current NBA game scores live using an API for data.
+![image](https://user-images.githubusercontent.com/47039827/204437531-b845f00b-cea6-4f2e-81c0-1fbe38b9c194.png)
