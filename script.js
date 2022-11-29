@@ -1,10 +1,4 @@
-// ADD FUNCTION RECURRING API UPDATE EVERY 1MIN OR SO
-
-
 getAPI();
-//window.onload = () => {
-    //loadTableData();
-//};
 
 async function getAPI() {
 
@@ -20,7 +14,7 @@ async function getAPI() {
             'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
         }
     };
-    var res = await fetch(`https://api-nba-v1.p.rapidapi.com/games?date=${year}-${month}-26`, options)
+    var res = await fetch(`https://api-nba-v1.p.rapidapi.com/games?date=${year}-${month}-${day}`, options)
         .catch(err => console.error(err));
 
     var data = await res.json();
@@ -46,54 +40,83 @@ function loadTableData(response){
     let data = '';
 
      for (item of tableData){
-        var period = item.quarter
-        var status = item.status
+        var period = item.quarter;
+        var status = item.status;
         var time = item.gameTime;
+
         time = new Date(time).toLocaleTimeString('en', { timeStyle: 'short', hour12: true, timeZone: 'EST' });
 
-        if(item.score1 == 'null' || item.score2 == 'null'){
-            console.log("worked")
-            item.score1 = '-'
-            console.log(item.score1)
-            item.score2 = '-'
+        if (status == "Scheduled"){
             data += `<tr>
             <td class = "left" rowspan="2">${item.team1} <img src=${item.team1Img}></td>
-            <td>${time}</td>
-            <td>EST</td>
+            <td>${time} EST</td>
             <td class="right" rowspan="2"><img src=${item.team2Img}> ${item.team2}</td>
             </tr>
             
             <tr>
-            <td class="period" colspan="2"><img src = images/clock.png></td>
+            <td class="period" colspan="1"><img src = images/clock.png></td>
             </tr>`;
         }
 
         else if (status == 'Finished'){
             data += `<tr>
             <td class="left" rowspan="2"> ${item.team1} <img src=${item.team1Img}></td>
-            <td> ${item.score1} </td>
-            <td> ${item.score2} </td>
+            <td> ${item.score1}&emsp;&emsp;${item.score2}</td>
             <td class="right" rowspan="2"> <img src=${item.team2Img}>  ${item.team2}</td>
             </tr>
 
             <tr>
-            <td class="period" colspan="2">Final</td>
+            <td class="period" colspan="1">Final</td>
             </tr>`;
         }
 
         else{
             data += `<tr>
             <td class="left" rowspan="2"> ${item.team1} <img src=${item.team1Img}></td>
-            <td> ${item.score1} </td>
-            <td> ${item.score2} </td>
+            <td> ${item.score1}&emsp;&emsp;${item.score2}</td>
             <td class="right" rowspan="2"> <img src=${item.team2Img}>  ${item.team2}</td>
-            </tr>
+            </tr>`
 
-            <tr>
-            <td class="period" colspan="2">${period}TH QR</td>
-            </tr>`;
+            switch(period){
+
+                case "1":
+                    data += `<tr>
+                <td class="period" colspan="1">${period}ST QTR</td>
+                </tr>`;
+                break;
+
+                case "2":
+                    data += `<tr>
+                <td class="period" colspan="1">${period}ND QTR</td>
+                </tr>`;
+                break;
+
+                case "3":
+                    data += `<tr>
+                <td class="period" colspan="1">${period}RD QTR</td>
+                </tr>`;
+                break;
+
+                case "4":
+                    data += `<tr>
+                <td class="period" colspan="1">${period}TH QTR</td>
+                </tr>`;
+
+            } 
         }
     }
 
+    var timeInterval = 60;
+    var myInterval = setInterval(function(){
+        document.getElementById("timer").innerHTML = "Refreshing stats in " + timeInterval + " seconds";
+        timeInterval--;
+
+        if(timeInterval < 0){
+            clearInterval(myInterval);
+            getAPI();
+        }
+
+    }, 1000)
+    
     tableBody.innerHTML = data;
 }

@@ -3,20 +3,28 @@
     <head>
         <link rel="stylesheet" href="styles.css">
         <title>NBA Scores</title>
+        <link rel="icon" type="image/x-icon" href="/images/nba-logo.ico">
     </head>
 
     <body>
-
         <div class = "main-body">
             <div class="scores-screen">
 
             <h1 class="titleH1"><img src='images/nba-logo.png'> NBA Live Results</h1>
+            <h4 id="timer"></h4>
+            <section>
+                <div class="loader">
+                    <span style="--i:0"></span>
+                    <span style="--i:3"></span>
+                    <span style="--i:6"></span>
+                </div>
+            </section>
 
             <table>
                 <thead>
                     <tr>
                         <th class="left" style="width:40%; ">Home</th>
-                        <th style="width:10%;" colspan="2">Scores</th>
+                        <th style="width:10%;" colspan="1">Score</th>
                         <th class ="right" style="width:40%;">Away</th>
                     </tr>
                 </thead>
@@ -30,5 +38,6 @@
 
     </body>
     <script type="text/javascript" src="script.js"></script>
+
 
 </html>
