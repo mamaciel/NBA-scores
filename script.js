@@ -10,7 +10,7 @@ async function getAPI() {
     const options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': 'e604efca67mshfd71a9503b3a366p1a753fjsne35759d5a9aa',
+            'X-RapidAPI-Key': process.env.API_KEY,
             'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
         }
     };
